@@ -26,7 +26,6 @@ app.post("/users", (req, res) => {
       res.json({
         message: `There is a register with name ${userFind.name}`,
       });
-      return res.json(users);
     }
     users.push({ id: user.id, name: user.name });
   });
@@ -37,17 +36,16 @@ app.post("/users", (req, res) => {
 app.put("/users", (req, res) => {
   const { id: userId, name } = req.query;
 
-  const userIndex = users.findIndex((_user) => _user.id === userId);
+  const userIndex = users.findIndex((_user) => _user.id === parseInt(userId));
 
   if (userIndex !== -1) {
     users[userIndex].name = name;
     res.json({
       message: "User name updated successfully",
       userUpdated: users[userIndex],
-      users: users,
     });
   }
-  res.status(404).json({ message: "User not found.", users: users });
+  res.status(404).json({ message: "User not found." });
 });
 
 app.delete("/users", (req, res) => {
@@ -59,11 +57,10 @@ app.delete("/users", (req, res) => {
     res.json({
       message: "User deleted successfully",
       userRemoved: deletedUser[0],
-      users: users,
     });
   }
 
-  res.status(404).json({ message: "User not found", users: users });
+  res.status(404).json({ message: "User not found" });
 });
 
-app.listen(3333);
+app.listen(3000);
