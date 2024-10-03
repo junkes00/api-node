@@ -7,8 +7,8 @@ app.get("/users", (req, res) => {
   res.json(users);
 });
 
-app.get("/users/:id", (req, res) => {
-  const userId = parseInt(req.params.id);
+app.get("/usersById", (req, res) => {
+  const userId = parseInt(req.query.id);
   const user = users.find((_u) => _u.id === userId);
 
   if (user) {
@@ -34,9 +34,8 @@ app.post("/users", (req, res) => {
   return res.json(users);
 });
 
-app.put("/users/:id", (req, res) => {
-  const userId = parseInt(req.params.id);
-  const { name } = req.body;
+app.put("/users", (req, res) => {
+  const { id: userId, name } = req.query;
 
   const userIndex = users.findIndex((_user) => _user.id === userId);
 
@@ -51,8 +50,8 @@ app.put("/users/:id", (req, res) => {
   res.status(404).json({ message: "User not found.", users: users });
 });
 
-app.delete("/users/:id", (req, res) => {
-  const userId = parseInt(req.params.id);
+app.delete("/users", (req, res) => {
+  const userId = parseInt(req.query.id);
   const userIndex = users.findIndex((_user) => _user.id === userId);
 
   if (userIndex !== -1) {
